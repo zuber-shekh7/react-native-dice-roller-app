@@ -10,12 +10,12 @@ export default function App() {
   const [diceImage, setDiceImage] = useState(require("./src/images/dice1.png"));
   const [userGuess, setUserGuess] = useState(0);
   const [selectedNumber, setSelectedNumber] = useState(0);
-  const [winner, setWinner] = useState(" ");
+  const [winner, setWinner] = useState(null);
 
   const handleOnPress = (number) => {
     setUserGuess(number);
     setSelectedNumber(number);
-    setWinner(" ");
+    setWinner(null);
   };
 
   const handleOnSubmit = () => {
@@ -51,10 +51,11 @@ export default function App() {
         setWinner(checkWinner(number, userGuess));
         break;
     }
+    setSelectedNumber(null);
   };
 
   const checkWinner = (randomNumber, guessNumber) => {
-    return randomNumber === guessNumber ? "You Won" : "Try Again";
+    return randomNumber === guessNumber ? true : false;
   };
 
   const renderNumberView = () => {
@@ -75,14 +76,36 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Title title="Dice Roller Game" />
-        {winner ? <Title title={winner} /> : null}
+        {winner ? (
+          <Title
+            style={{ backgroundColor: "green" }}
+            title={"Hurry, You Won 🥳"}
+          />
+        ) : winner === false ? (
+          <Title
+            style={{ backgroundColor: "red" }}
+            title={"Better Luck Next Time"}
+          />
+        ) : (
+          <Title title={" "} />
+        )}
       </View>
       <View style={styles.diceContainer}>
-        <Image style={styles.diceImage} source={diceImage} />
+        {!selectedNumber ? (
+          <Image style={styles.diceImage} source={diceImage} />
+        ) : (
+          <Title title={"Select your number"} />
+        )}
       </View>
       <View style={styles.numberContainer}>{renderNumberView()}</View>
       <View style={styles.buttonContainer}>
-        <Subtitle title={`You have selected ${userGuess}`} />
+        <Subtitle
+          title={
+            selectedNumber
+              ? `You have selected ${userGuess}`
+              : "Select any number to start a game"
+          }
+        />
         <Button
           disabled={!selectedNumber ? true : false}
           handleOnSubmit={handleOnSubmit}

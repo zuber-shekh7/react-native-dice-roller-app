@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
-const Title = ({ title }) => {
-  return <Text style={styles.title}>{title}</Text>;
+const Title = ({ title, style }) => {
+  return <Text style={[styles.title, style]}>{title}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
 });
 export default Title;
