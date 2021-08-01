@@ -83,7 +83,11 @@ export default function App() {
       <View style={styles.numberContainer}>{renderNumberView()}</View>
       <View style={styles.buttonContainer}>
         <Subtitle title={`You have selected ${userGuess}`} />
-        <Button handleOnSubmit={handleOnSubmit} title="Roll Dice" />
+        <Button
+          disabled={!selectedNumber ? true : false}
+          handleOnSubmit={handleOnSubmit}
+          title="Roll Dice"
+        />
       </View>
     </View>
   );
